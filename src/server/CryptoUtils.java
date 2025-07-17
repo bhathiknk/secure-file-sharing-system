@@ -4,8 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-// REMOVE THIS LINE: import javax.crypto.spec.IvParameterSpec; // No longer needed for GCM
-import javax.crypto.spec.GCMParameterSpec; // IMPORT THIS FOR GCM
+import javax.crypto.spec.GCMParameterSpec;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -64,7 +63,7 @@ public class CryptoUtils {
     // Encrypts data using a specific user's file key and an IV
     public static byte[] encryptFile(byte[] data, SecretKey userFileKey, byte[] iv) throws Exception {
         Cipher c = Cipher.getInstance(ALGO_TRANSFORMATION);
-        // CORRECTED: Use GCMParameterSpec
+        //  Use GCMParameterSpec
         c.init(Cipher.ENCRYPT_MODE, userFileKey, new GCMParameterSpec(GCM_TAG_LENGTH, iv));
         return c.doFinal(data);
     }
@@ -72,7 +71,7 @@ public class CryptoUtils {
     // Decrypts data using a specific user's file key and an IV
     public static byte[] decryptFile(byte[] encryptedData, SecretKey userFileKey, byte[] iv) throws Exception {
         Cipher c = Cipher.getInstance(ALGO_TRANSFORMATION);
-        // CORRECTED: Use GCMParameterSpec
+        //  Use GCMParameterSpec
         c.init(Cipher.DECRYPT_MODE, userFileKey, new GCMParameterSpec(GCM_TAG_LENGTH, iv));
         return c.doFinal(encryptedData);
     }

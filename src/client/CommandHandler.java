@@ -12,8 +12,8 @@ import java.util.List;
 public class CommandHandler {
     private BufferedReader in;
     private PrintWriter out;
-    private InputStream socketInputStream; // For binary file data
-    private OutputStream socketOutputStream; // For binary file data
+    private InputStream socketInputStream;
+    private OutputStream socketOutputStream;
     private String jwtToken = null;
     private String currentUsername = null;
 
@@ -91,7 +91,7 @@ public class CommandHandler {
                     socketOutputStream.write(buffer, 0, bytesRead);
                 }
                 socketOutputStream.flush(); // Ensure all data is sent
-                // Important: DO NOT CLOSE socketOutputStream here, it closes the underlying socket.
+
             }
             // Read the final status after file transfer
             return in.readLine();
@@ -104,7 +104,7 @@ public class CommandHandler {
         String initialResponse = authenticateAndGetResponse("DOWNLOAD " + fileName);
 
         if ("READY".equals(initialResponse)) {
-            // NEW: Read the expected file size
+            //  Read the expected file size
             String fileSizeStr = in.readLine();
             long expectedFileSize;
             try {
@@ -138,7 +138,7 @@ public class CommandHandler {
 
                 System.out.println("DEBUG (Download): Successfully read " + totalBytesRead + " bytes for file " + fileName + ".");
             }
-            // Read the final status after file transfer (e.g., "OK Download complete")
+            // Read the final status after file transfer
             return in.readLine();
         } else {
             return initialResponse;

@@ -40,7 +40,7 @@ public class FileMetadata implements Serializable {
         return iv;
     }
 
-    // Setters (if needed, but for metadata, usually immutable)
+
     public void setFilename(String filename) {
         this.filename = filename;
     }

@@ -10,10 +10,9 @@ import javax.crypto.SecretKey;
 
 public class UserManager {
     private static final Path USERS_FILE = Paths.get("storage/users.txt");
-    // Format: username,hashed_password,salt_base64,encrypted_file_key_base64
     private static final Map<String, User> users = new ConcurrentHashMap<>();
     private static final Map<String, Integer> loginAttempts = new ConcurrentHashMap<>();
-    private static final Map<String, Long> lockedOutUsers = new ConcurrentHashMap<>(); // IP or username -> lockout end time
+    private static final Map<String, Long> lockedOutUsers = new ConcurrentHashMap<>();
     private static final int MAX_LOGIN_ATTEMPTS = 5;
     private static final long LOCKOUT_DURATION_MINUTES = 5;
 

@@ -21,8 +21,6 @@ public class ClientCryptoUtils {
     /**
      * Calculates the SHA-256 hash of a file.
      * This can be used by the client before uploading to verify integrity after download.
-     * @param file The file to hash.
-     * @return The Base64 encoded SHA-256 hash string, or null if an error occurs.
      */
     public static String calculateFileSha256(File file) {
         try (FileInputStream fis = new FileInputStream(file)) {
@@ -40,5 +38,4 @@ public class ClientCryptoUtils {
         }
     }
 
-    // Add other client-side crypto methods here if needed (e.g., for client-side key storage/derivation)
 }

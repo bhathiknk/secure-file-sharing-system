@@ -20,9 +20,8 @@ public class SecureFileClient {
     private static final String SERVER_IP = "localhost";
     private static final int SERVER_PORT = 5000;
     private static final String TRUSTSTORE_PATH = "certs/client.truststore";
-    // --- READ FROM ENV VARS ---
     private static String TRUSTSTORE_PASSWORD; // Declare as non-final
-    // ---------------------
+
 
     // ANSI Color Codes
     public static final String RESET = "\u001B[0m";
@@ -35,7 +34,7 @@ public class SecureFileClient {
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
 
-    // ANSI Background Colors (less common for text highlighting, but useful)
+    // ANSI Background Colors
     public static final String BLACK_BACKGROUND = "\u001B[40m";
     public static final String RED_BACKGROUND = "\u001B[41m";
     public static final String GREEN_BACKGROUND = "\u001B[42m";

@@ -10,7 +10,7 @@ import java.security.KeyStore;
 public class SecureFileServer {
     public static final int PORT = 5000;
     private static final String KEYSTORE_PATH = "certs/server.keystore";
-    private static String KEYSTORE_PASSWORD; // Declare as non-final for assignment after dotenv load
+    private static String KEYSTORE_PASSWORD;
 
     public static void main(String[] args) {
         System.out.println("[SERVER] Starting Secure File Server on port " + PORT);

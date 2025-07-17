@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ClientHandler implements Runnable {
-    private final SSLSocket socket; // Use SSLSocket
+    private final SSLSocket socket;
     private BufferedReader reader;
     private PrintWriter writer;
     private String authenticatedUser;
     private SecretKey authenticatedUserFileKey; // Per-user decryption key
 
-    // --- READ FROM ENV VARS ---
+
     private static String JWT_SECRET;
     private static Algorithm JWT_ALGORITHM;
 
@@ -30,7 +30,7 @@ public class ClientHandler implements Runnable {
         // Load dotenv directly in the static block for this class
         // This ensures JWT_SECRET is available when ClientHandler is first loaded
         Dotenv dotenv = Dotenv.load(); // Load .env file
-        JWT_SECRET = dotenv.get("JWT_SECRET"); // Get directly from dotenv instance
+        JWT_SECRET = dotenv.get("JWT_SECRET");
 
         if (JWT_SECRET == null || JWT_SECRET.isEmpty()) {
             System.err.println("ERROR: JWT_SECRET environment variable is not set or is empty in ClientHandler.");
@@ -38,7 +38,7 @@ public class ClientHandler implements Runnable {
         }
         JWT_ALGORITHM = Algorithm.HMAC256(JWT_SECRET);
     }
-    // --------------------------
+
 
     private static final long JWT_LIFETIME_SECONDS = TimeUnit.HOURS.toSeconds(1); // Token validity
 
@@ -114,16 +114,6 @@ public class ClientHandler implements Runnable {
 
     private void handleAuthentication(String jwtToken) {
         try {
-            // No need for this defensive check if static block correctly initializes JWT_ALGORITHM
-            // if (JWT_ALGORITHM == null) {
-            //     JWT_SECRET = System.getenv("JWT_SECRET");
-            //     if (JWT_SECRET == null || JWT_SECRET.isEmpty()) {
-            //         writer.println("ERROR Server misconfiguration: JWT secret not loaded.");
-            //         this.authenticatedUser = null;
-            //         return;
-            //     }
-            //     JWT_ALGORITHM = Algorithm.HMAC256(JWT_SECRET);
-            // }
 
             DecodedJWT jwt = JWT.require(JWT_ALGORITHM).build().verify(jwtToken);
             this.authenticatedUser = jwt.getSubject();

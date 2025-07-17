@@ -10,7 +10,7 @@ import javax.crypto.SecretKey;
 
 public class FileManager {
     private static final String BASE_DIR = "storage/files/";
-    private static final String METADATA_FILE_SUFFIX = "_metadata.txt"; // Per-user metadata file
+    private static final String METADATA_FILE_SUFFIX = "_metadata.txt";
 
     public static void receiveEncryptedFile(InputStream in, String username, String filename, SecretKey userFileKey) throws IOException {
         Path userDir = Paths.get(BASE_DIR, username);
@@ -20,17 +20,9 @@ public class FileManager {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[4096];
             int len;
-            // The upload client needs to send the file size first for robust transfer.
-            // For now, this relies on client closing stream or specific EOF behavior.
-            // For a complete solution, adjust client to send file size before binary data for UPLOAD too.
-            // Current upload logic in client.CommandHandler.uploadFile doesn't send size.
-            // It just writes data and expects server to read.
-            // This is functional if the client closes its output stream after sending.
+
             while ((len = in.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                // The `available()` check is unreliable, especially for SSL streams.
-                // For UPLOAD, the robust way is client sends file size first, similar to DOWNLOAD.
-                // Or client closes output stream after data.
                 if (in.available() == 0 && len < buffer.length) {
                     break;
                 }
@@ -46,7 +38,7 @@ public class FileManager {
             Files.write(filePath, encrypted);
 
             // Store IV along with other metadata
-            // FIX: Changed Base664 to Base64
+            // Changed Base664 to Base64
             saveMetadata(username, new FileMetadata(filename, fileContent.length, fileHash, username, Base64.getEncoder().encodeToString(iv)));
         } catch (Exception e) {
             System.err.println("Error receiving encrypted file: " + e.getMessage());
